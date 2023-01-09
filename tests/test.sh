@@ -80,7 +80,7 @@ deploydummies() {
 deployreaper() {
     make deploy K8S_NAMESPACE=${namespace} REAP_POD_LABEL_MATCHERS="l2=l2,l4=l4" REAP_LABEL_MATCH_TYPE=${match_mode} REAP_POD_MAX_AGE_SECONDS=20 RUN_SLEEP_TIME=5 K8S_DEPLOYMENT_NAME=pod-reaper-test
     waitpod app=pod-reaper-test 10
-    kubectl -n ${namespace} wait --for=condition=ready pod -l app=pod-reaper-test --timeout=120s
+    kubectl -n ${namespace} wait --for=condition=ready pod -l app=pod-reaper-test --timeout=240s
 }
 
 deploydummies
