@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: @@K8S_DEPLOYMENT_NAME@@
+  labels:
+    app: @@K8S_DEPLOYMENT_NAME@@
+spec:
+  selector:
+    matchLabels:
+      app: @@K8S_DEPLOYMENT_NAME@@
+  template:
+    metadata:
+      labels:
+        app: @@K8S_DEPLOYMENT_NAME@@
+    spec:
+      serviceAccountName: pod-reaper
+      containers:
+        - name: pod-reaper
+          image: tshalif/pod-reaper-java:@@DOCKER_IMG_VERSION@@
+          env:
+            - name: REAP_POD_LABEL_MATCHERS
+              value: '@@REAP_POD_LABEL_MATCHERS@@'
+            - name: REAP_POD_MAX_AGE_SECONDS
+              value: '@@REAP_POD_MAX_AGE_SECONDS@@'
+            - name: RUN_SLEEP_TIME
+              value: '@@RUN_SLEEP_TIME@@'
+            - name: DRY_RUN
+              value: '@@DRY_RUN@@'
+            - name: REAP_NAMESPACE
+              value: @@REAP_NAMESPACE@@
+            - name: REAP_LABEL_MATCH_TYPE
+              value: @@REAP_LABEL_MATCH_TYPE@@
+
+
+
+
