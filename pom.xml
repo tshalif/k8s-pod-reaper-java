@@ -64,13 +64,6 @@
             <plugin>
                 <artifactId>maven-checkstyle-plugin</artifactId>
                 <version>3.1.1</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.puppycrawl.tools</groupId>
-                        <artifactId>checkstyle</artifactId>
-                        <version>10.6.0</version>
-                    </dependency>
-                </dependencies>
                 <configuration>
                     <violationSeverity>warning</violationSeverity>
                     <consoleOutput>true</consoleOutput>
