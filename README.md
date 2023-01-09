@@ -1,5 +1,7 @@
 # k8s-pod-reaper-java
-Provides Kubernetes workload for deleting stale Kubernetes POD instances based on age and label matching.
+Provides long-running Kubernetes workload for deleting stale Kubernetes POD instances based on age and label matching.
+This service can be useful if you have a problem with short lived jobs/pods which are not terminating and hog
+cluster resources neadlessly
 
 Note: Normally such a service should consume very little memroy and CPU, so
 usging this Java implemention is not ideal for low resource clusters.
