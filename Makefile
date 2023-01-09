@@ -24,6 +24,7 @@ endif
 K8S_DEPLOYMENT_NAME = pod-reaper
 
 deploy: REAP_NAMESPACE = $(K8S_NAMESPACE)
+deploy: DRY_RUN = false
 deploy:
 ifeq ($(K8S_NAMESPACE),)
 	$(error K8S_NAMESPACE for deploying pod-reaper must be specified)
