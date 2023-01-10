@@ -51,9 +51,9 @@ endif
 
 test: .kind-init test-image
 
-test-image: .kind-load-image test-and test-or
+test-image: .kind-load-image .test-and .test-or
 
-test-%:
+.test-%:
 	./tests/test.sh reaper-test-$* $*
 
 build:
