@@ -1,6 +1,6 @@
 # This workflow will build a package using Maven
 
-name: Maven Package
+name: Pod Reaper
 
 on:
   push:
