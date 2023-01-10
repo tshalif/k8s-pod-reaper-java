@@ -1,5 +1,5 @@
 DOCKER_IMG_TAG = tshalif/pod-reaper-java
-DOCKER_IMG_VERSION = v0.1.0
+DOCKER_IMG_VERSION = v0.1.1
 
 
 docker:
@@ -40,7 +40,12 @@ endif
 .kind-destroy:
 	-kind delete cluster
 
-test: .kind-init test-and test-or
+.kind-load-image:
+	kind load docker-image $(DOCKER_IMG_TAG):$(DOCKER_IMG_VERSION)
+
+test: .kind-init test-image
+
+test-image: .kind-load-image test-and test-or
 
 test-%:
 	./tests/test.sh reaper-test-$* $*
