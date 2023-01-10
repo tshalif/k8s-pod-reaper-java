@@ -56,12 +56,15 @@ kubectl create namespace ${namespace}
 waitns 30
 
 deploydummy() {
+    name=$1
+    labels="$2"
+
     kubectl apply -f - --namespace ${namespace} <<EOF 
 apiVersion: v1
 kind: Pod
 metadata:
-  name: $(uuid)
-  labels: ${1}
+  name: ${name}
+  labels: ${labels}
 spec:
   containers:
     - name: pause
@@ -70,11 +73,11 @@ EOF
 }
     
 deploydummies() {
-    deploydummy '{"l1":"l1", "l2":"l2", "dead_or":"yes", "dead_and":"no"}'
-    deploydummy '{"l3":"l3", "l1":"l1", "dead_or":"no", "dead_and":"no"}'
-    deploydummy '{"l1":"l1", "l4":"l4", "dead_or":"yes", "dead_and":"no"}'
-    deploydummy '{"l2":"l2", "l4":"l4", "dead_or":"yes", "dead_and":"yes"}' 
-    deploydummy '{"l3":"l3", "dead_or":"no", "dead_and":"no"}'
+    deploydummy dummy1 '{"l1":"l1", "l2":"l2", "dead_or":"yes", "dead_and":"no"}'
+    deploydummy dummy2 '{"l3":"l3", "l1":"l1", "dead_or":"no", "dead_and":"no"}'
+    deploydummy dummy3 '{"l1":"l1", "l4":"l4", "dead_or":"yes", "dead_and":"no"}'
+    deploydummy dummy4 '{"l2":"l2", "l4":"l4", "dead_or":"yes", "dead_and":"yes"}'
+    deploydummy dummy5 '{"l3":"l3", "dead_or":"no", "dead_and":"no"}'
 }
 
 deployreaper() {
