@@ -1,3 +1,5 @@
+[![Pod Reaper](https://github.com/tshalif/k8s-pod-reaper-java/actions/workflows/maven-build.yml/badge.svg)](https://github.com/tshalif/k8s-pod-reaper-java/actions/workflows/maven-build.yml)
+
 # k8s-pod-reaper-java
 Provides long-running Kubernetes workload for deleting stale Kubernetes POD instances based on age and label matching.
 This service can be useful if you have a problem with short lived jobs/pods which are not terminating and hog

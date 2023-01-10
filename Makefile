@@ -1,5 +1,5 @@
 DOCKER_IMG_TAG = tshalif/pod-reaper-java
-DOCKER_IMG_VERSION = v0.1.0
+DOCKER_IMG_VERSION = v0.1.1
 
 
 docker:
@@ -34,15 +34,26 @@ endif
 	-kubectl create rolebinding pod-reaper --role=pod-reaper --serviceaccount=$(K8S_NAMESPACE):pod-reaper $(KUBECTL_ARGS) --namespace=$(K8S_NAMESPACE)
 	sed $(foreach a,$(TEMPLATE_SUBST_ARGS),-e 's/@@$(a)@@/$($(a))/g') etc/deployment.yaml.in | tee /dev/stderr | kubectl apply -f - $(KUBECTL_ARGS) --namespace $(K8S_NAMESPACE)
 
+KIND = kind
+
+ifdef KIND_CLUSTER_NAME
+KIND += --name $(KIND_CLUSTER_NAME)
+endif
+
 .kind-init: .kind-destroy
-	kind create cluster
+	$(KIND) create cluster
 
 .kind-destroy:
-	-kind delete cluster
+	-$(KIND) delete cluster
 
-test: .kind-init test-and test-or
+.kind-load-image:
+	$(KIND) load docker-image $(DOCKER_IMG_TAG):$(DOCKER_IMG_VERSION)
 
-test-%:
+test: .kind-init test-image
+
+test-image: .kind-load-image .test-and .test-or
+
+.test-%:
 	./tests/test.sh reaper-test-$* $*
 
 build:
