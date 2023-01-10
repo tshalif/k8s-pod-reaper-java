@@ -34,14 +34,20 @@ endif
 	-kubectl create rolebinding pod-reaper --role=pod-reaper --serviceaccount=$(K8S_NAMESPACE):pod-reaper $(KUBECTL_ARGS) --namespace=$(K8S_NAMESPACE)
 	sed $(foreach a,$(TEMPLATE_SUBST_ARGS),-e 's/@@$(a)@@/$($(a))/g') etc/deployment.yaml.in | tee /dev/stderr | kubectl apply -f - $(KUBECTL_ARGS) --namespace $(K8S_NAMESPACE)
 
+KIND = kind
+
+ifdef KIND_CLUSTER_NAME
+KIND += --name $(KIND_CLUSTER_NAME)
+endif
+
 .kind-init: .kind-destroy
-	kind create cluster
+	$(KIND) create cluster
 
 .kind-destroy:
-	-kind delete cluster
+	-$(KIND) delete cluster
 
 .kind-load-image:
-	kind load docker-image $(DOCKER_IMG_TAG):$(DOCKER_IMG_VERSION)
+	$(KIND) load docker-image $(DOCKER_IMG_TAG):$(DOCKER_IMG_VERSION)
 
 test: .kind-init test-image
 

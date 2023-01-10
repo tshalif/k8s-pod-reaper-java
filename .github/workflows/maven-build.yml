@@ -29,8 +29,8 @@ jobs:
     - name: Build docker image
       run: make docker
 
-    - name: Create Kind cluster
+    - name: Create Kind cluster chart-testing
       uses: helm/kind-action@v1.4.0
 
     - name: Test docker image on k8s Kind cluster
-      run: make test-image
+      run: make test-image KIND_CLUSTER_NAME=chart-testing
